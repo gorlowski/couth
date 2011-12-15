@@ -26,10 +26,10 @@ install:
 	@echo "	   You should now edit your $(AWESOME_CFG_DIR)/rc.lua to require the couth"
 	@echo "	   modules that you want to use, and bind them to key bindings."
 	@echo
-	@echo "	    -- you MUST require this to use ANY couth modules: "
+	@echo "	   -- you MUST require this to use ANY couth modules: "
 	@echo "	   require('couth.couth') "
 	@echo
-	@echo "	    -- These are optional. Only require the ones that you want to use. "
+	@echo "	   -- These are optional. Only require the ones that you want to use. "
 	@echo "	   require('couth.alsa') "
 	@echo "	   require('couth.mpc') "
 	@echo	

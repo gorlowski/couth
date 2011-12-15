@@ -19,6 +19,8 @@ if not couth then couth = {} end
 if not couth.CONFIG then 
   couth.CONFIG = {
 
+		-- The width of your volume indicators (the max number of | characters to
+		-- display)
     INDICATOR_MAX_BARS = 20,
 
     -- these are the alsa controls that can be controlled or displayed
@@ -31,6 +33,8 @@ if not couth.CONFIG then
       'PCM',
     },
 
+		-- The font to use for notifications. You should use a mono-space font so
+		-- the columns are evenly aligned.
     NOTIFIER_FONT = 'mono 22',
     NOTIFIER_POSITION = 'top_right',
     NOTIFIER_TIMEOUT = 5,
