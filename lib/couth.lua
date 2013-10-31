@@ -9,18 +9,19 @@
 --
 ---------------------------------------------------------------------------
 
-require 'io'
+couth = { path = {}, string = {}, indicator = {} notifier = {id=nil} }
 
-if not couth then couth = {} end
+local io = require 'io'
+local naughty = naughty or  require 'naughty'
+
 --
 --  This is the default configuration for couth modules. 
 --  Modify this table to change the defaults.
 --
-if not couth.CONFIG then 
-  couth.CONFIG = {
+couth.CONFIG = {
 
-		-- The width of your volume indicators (the max number of | characters to
-		-- display)
+    -- The width of your volume indicators (the max number of | characters to
+    -- display)
     INDICATOR_MAX_BARS = 20,
 
     -- these are the alsa controls that can be controlled or displayed
@@ -29,18 +30,17 @@ if not couth.CONFIG then
     --    amixer scontrols |sed -e "s/.* '//" -e "s/'.*//"
     --
     ALSA_CONTROLS = {
-      'Master',
-      'PCM',
+        'Master',
+        'PCM',
     },
 
-		-- The font to use for notifications. You should use a mono-space font so
-		-- the columns are evenly aligned.
+    -- The font to use for notifications. You should use a mono-space font so
+    -- the columns are evenly aligned.
     NOTIFIER_FONT = 'mono 22',
     NOTIFIER_POSITION = 'top_right',
     NOTIFIER_TIMEOUT = 5,
 
-  } 
-end
+}
 
 --
 --  general functions
@@ -55,7 +55,6 @@ end
 --
 --  file path functions (like python os.path)
 --
-if not couth['path'] then couth.path = {} end
 function couth.path.file_exists(fileName)
   doesExist = false
   f = io.open(fileName, 'r')
@@ -69,7 +68,6 @@ end
 --
 --  string functions
 --
-if not couth['string'] then couth.string = {} end
 function couth.string.maxLen(t)
   local ret=0, l
   for _,v in pairs(t) do
@@ -88,7 +86,6 @@ end
 --
 --  indicator functions
 --
-if not couth['indicator'] then couth.indicator = {} end
 function couth.indicator.barIndicator(prct)
   local maxBars = couth.CONFIG.INDICATOR_MAX_BARS
   local num_bars = math.floor(maxBars * (prct / 100.0))
@@ -98,7 +95,6 @@ end
 --
 --  notifier
 --
-if not couth['notifier'] then couth.notifier = {id=nil} end
 function couth.notifier:notify(msg)
   self.id = naughty.notify({
     text = msg,
@@ -109,3 +105,4 @@ function couth.notifier:notify(msg)
   }).id
 end
 
+return couth
