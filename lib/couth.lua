@@ -3,6 +3,7 @@
 --    couth.lua   -- shared libaries for the couth awesomewm library
 --
 --    @author Greg Orlowski
+--    @contributor ▟ ▖▟ ▖
 --    @copyright 2011 Greg Orlowski
 --
 --  
