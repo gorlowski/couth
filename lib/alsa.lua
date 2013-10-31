@@ -113,4 +113,6 @@ function M:setVolume(ctrl, level)
   return self:getVolume(ctrl)
 end
 
-couth.alsa = M
+require('couth').alsa = M
+
+return M

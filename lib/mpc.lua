@@ -62,4 +62,6 @@ function M:setVolume(host, val)
   return self:renderVolumeDisplay(host, self:execMpcVolume(host, val) )
 end
 
-couth.mpc = M
+require('couth').mpc = M
+
+return M
