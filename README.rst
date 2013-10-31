@@ -49,7 +49,7 @@ Installation
 - Configure your ``rc.lua`` to add::
 
     -- you MUST require this to use ANY couth modules:
-    require('couth.couth')
+    couth = require('couth')
 
     -- These are optional. Only require the ones that you want to use.
     require('couth.alsa')
