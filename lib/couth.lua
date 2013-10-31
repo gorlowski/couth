@@ -41,6 +41,13 @@ couth.CONFIG = {
     NOTIFIER_POSITION = 'top_right',
     NOTIFIER_TIMEOUT = 5,
 
+    -- Character to draw the actual bar with
+    -- more complex example: {'','▏','▎','▍','▌','▋','▊','▉','█'}
+    INDICATOR_BARS = {'|'},
+
+    -- outer left and outer right character of the bar
+    INDICATOR_BORDERS = {'[',']'},
+
 }
 
 --
@@ -88,9 +95,21 @@ end
 --  indicator functions
 --
 function couth.indicator.barIndicator(prct)
-  local maxBars = couth.CONFIG.INDICATOR_MAX_BARS
-  local num_bars = math.floor(maxBars * (prct / 100.0))
-  return '[' .. couth.string.rpad(string.rep('|', num_bars), maxBars) .. ']'
+    local BAR = couth.CONFIG.INDICATOR_BARS
+    local BORDER = couth.CONFIG.INDICATOR_BORDERS
+    local maxBars = couth.CONFIG.INDICATOR_MAX_BARS
+    local num_bars = maxBars * prct * 0.01
+    local full_bars = math.floor(num_bars)
+    local bar, space
+    if #BAR == 1 then -- shortcut
+        bar = string.rep(BAR[1], full_bars)
+        space = string.rep(" ", maxBars - full_bars)
+    else
+        local part_bar = math.floor((num_bars - full_bars) * (#BAR - 1))
+        bar = string.rep(BAR[#BAR], full_bars) .. (BAR[part_bar] or "")
+        space = string.rep(" ", maxBars - full_bars - (part_bar > 0 and 1 or 0))
+    end
+    return BORDER[1] .. bar .. space .. BORDER[2]
 end
 
 --
