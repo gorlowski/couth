@@ -10,7 +10,7 @@
 --
 ---------------------------------------------------------------------------
 
-couth = { path = {}, string = {}, indicator = {} notifier = {id=nil} }
+couth = { path = {}, string = {}, indicator = {}, notifier = {id=nil} }
 
 local io = require 'io'
 local naughty = naughty or  require 'naughty'
