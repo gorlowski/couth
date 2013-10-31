@@ -6,7 +6,7 @@
 --    @contributor ▟ ▖▟ ▖
 --    @copyright 2011 Greg Orlowski
 --
---  
+--
 --
 ---------------------------------------------------------------------------
 
@@ -16,7 +16,7 @@ local io = require 'io'
 local naughty = naughty or  require 'naughty'
 
 --
---  This is the default configuration for couth modules. 
+--  This is the default configuration for couth modules.
 --  Modify this table to change the defaults.
 --
 couth.CONFIG = {

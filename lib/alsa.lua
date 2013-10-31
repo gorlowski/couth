@@ -15,9 +15,9 @@
 --      couth.alsa:getVolume('Master')
 --
 --      -- Set the the volume for CONTROL to NEW_VALUE, and
---      -- return bar indicators that displays all volumes with 
+--      -- return bar indicators that displays all volumes with
 --      -- the indicator for CONTROL highlighted.
---      -- 
+--      --
 --      -- NOTE: NEW_VALUE can be any string that "amixer" will
 --      -- accept as an argument, e.g., 3dB-, 3dB+, etc.
 --      couth.alsa:setVolume('localhost', NEW_VALUE)
@@ -46,16 +46,16 @@ function M:getVolumes()
   for i,v in pairs(couth.CONFIG.ALSA_CONTROLS) do controls[v]=1 end
 
   local m, ctrl, vol, mute
-  for line in volumes:gmatch("[^\n]+") do 
+  for line in volumes:gmatch("[^\n]+") do
     if couth.count_keys(controls) > 0 then
       _,_,m = line:find(self.__control_pattern)
-      if m and controls[m] then 
-        ctrl = m 
+      if m and controls[m] then
+        ctrl = m
       else
         _,_,vol = line:find(self.__volume_pattern)
         if ctrl and vol and controls[ctrl] then
           ret[ctrl] = {vol = vol}
-          _,_,mute=line:find(self.__mute_pattern) 
+          _,_,mute=line:find(self.__mute_pattern)
           if mute then ret[ctrl]['mute'] = mute end
           controls[ctrl], vol, mute, ctrl = nil
         end

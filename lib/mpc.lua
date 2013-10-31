@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------
 --
---    couth mpc/mpd volume indicator library. 
+--    couth mpc/mpd volume indicator library.
 --
 --    In order for this to work, mpc must be on your path, and mpd must be
 --    running on the host (obviously)
@@ -14,7 +14,7 @@
 --      -- Set the the volume from localhost to NEW_VALUE, and
 --      -- return a bar indicator that displays the new value.
 --      -- NOTE: NEW_VALUE can be any string that "mpc volume" will
---      -- accept as an argument, e.g., 
+--      -- accept as an argument, e.g.,
 --      --    "50" to set volume to 50%,
 --      --    "+5" to increase the volume by 5%,
 --      --    "-5" to decrease the volume by 5%,
@@ -27,7 +27,7 @@
 --    -- mpc volume on pizza
 --    awful.key({ modkey, "Shift" }, "XF86AudioLowerVolume",    function () couth.notifier:notify( couth.mpc:setVolume('pizza','-5')) end),
 --    awful.key({ modkey, "Shift" }, "XF86AudioRaiseVolume",    function () couth.notifier:notify( couth.mpc:setVolume('pizza','+5')) end),
---    awful.key({ modkey, "Shift" }, "v",                       function () couth.notifier:notify( couth.mpc:getVolume('pizza') ) end) 
+--    awful.key({ modkey, "Shift" }, "v",                       function () couth.notifier:notify( couth.mpc:getVolume('pizza') ) end)
 --
 ---------------------------------------------------------------------------
 local M = {}
@@ -40,7 +40,7 @@ function M:execMpcVolume(host, arg)
   fd:close()
 
   local ret
-  for line in mpc_ret:gmatch("[^\n]+") do 
+  for line in mpc_ret:gmatch("[^\n]+") do
     local _,_,ret = line:find(self.__volume_pattern)
     if ret then return ret end
   end
