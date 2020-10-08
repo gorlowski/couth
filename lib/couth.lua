@@ -11,6 +11,8 @@
 
 require 'io'
 
+local naughty = require("naughty")
+
 if not couth then couth = {} end
 --
 --  This is the default configuration for couth modules. 
@@ -31,6 +33,8 @@ if not couth.CONFIG then
     ALSA_CONTROLS = {
       'Master',
       'PCM',
+      'Speaker',
+      'Headphone',
     },
 
 		-- The font to use for notifications. You should use a mono-space font so

@@ -33,9 +33,13 @@ M.__volume_pattern = 'Playback.*%[(%d+)%%%]'
 M.__mute_pattern = '%[(o[nf]+)%]'
 M.__control_pattern = "^Simple mixer control '(%a+)'"
 
+-- On my laptop, I have to use "card" 1 (-c1) with amixer,
+-- but you may need to use card 0 (-c0)
+M.__amixer_command = "amixer -c1"
+
 -- get all alsa volumes as a table:
 function M:getVolumes()
-  local fd = io.popen("amixer -c0 scontents")
+  local fd = io.popen(self.__amixer_command .. " scontents")
   local volumes = fd:read("*all")
   fd:close()
 
@@ -109,7 +113,7 @@ end
 --  that amixer can recognize 3dB+
 --
 function M:setVolume(ctrl, level)
-  io.popen("amixer -c0 set " .. ctrl .. ' ' .. level):close()
+  io.popen(self.__amixer_command .. " set " .. ctrl .. ' ' .. level):close()
   return self:getVolume(ctrl)
 end
 
