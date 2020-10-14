@@ -28,8 +28,24 @@ couth.sound:
 couth.screen:
 
     allows you to increase and decrease the brightness of your screen or
-    turn off the display.
+    turn off the display. This only works if your user can write to the
+    "brightness" file in /sys that corresponds to your video driver.
 
+    I added the following udev rules in ``/etc/udev/rules.d/backlight.rules``
+    to ensure that members of the video group (including my user) have access
+    to write to the display brightness control file::
+	
+        # See: https://wiki.archlinux.org/index.php/backlight
+  			#
+        # On my system with intel video, backlight controls are in
+        # /sys/class/backlight/intel_backlight By default, the brightness file in
+        # this directory can only be written by root. These rules change the
+        # group ownership of the brightness file to video and make the file
+        # group-writable. This allows personal users in the video group to set
+        # the backlight brightness by writing to the file.
+  		  ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness"
+  		  ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
+		
 couth.mpc:
 
     This is similar to the couth.sound library, but it allows you to get/set the
