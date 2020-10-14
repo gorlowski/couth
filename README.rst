@@ -73,11 +73,12 @@ Installation
 - Configure your ``rc.lua`` to add::
 
     -- you MUST require this to use ANY couth modules:
-    require('couth.couth')
+    local couth = require('couth.couth')
 
     -- These are optional. Only require the ones that you want to use.
-    require('couth.sound')
-    require('couth.mpc')
+    couth.sound = require('couth.sound')
+    couth.screen = require('couth.screen')
+
 
 - Update your ``rc.lua`` to add a couth.CONFIG section to customize couth, and
   then add key bindings to couth functions.
