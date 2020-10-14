@@ -1,102 +1,84 @@
 ---------------------------------------------------------------------------
 --
---    couth.lua   -- shared libaries for the couth awesomewm library
+--    couth.lua   -- core library for the couth awesome wm project
 --
 --    @author Greg Orlowski
---    @copyright 2011 Greg Orlowski
---
---  
+--    @copyright 2020 Greg Orlowski
 --
 ---------------------------------------------------------------------------
 
 require 'io'
 
 local naughty = require("naughty")
+local couth_lib = require("couth.lib")
 
-if not couth then couth = {} end
+-- Initialize couth.config only if it is non-nil. This allows the user to
+-- optionally initialize couth.config before this module is loaded
+local couth = couth or {}
+if not couth.config then couth.config = {} end
+
+-- Add couth_lib to the couth namespace
+for k,v in pairs(couth_lib) do couth[k]=v end
+
+function couth.config:set_default(k,v)
+  if self[k] == nil and v ~= nil then
+    self[k] = v
+  end
+end
+
+function couth.config:set_defaults(t)
+  for k,v in pairs(t) do
+    self:set_default(k, v)
+  end
+end
+
 --
---  This is the default configuration for couth modules. 
+--  This is the default configuration for couth modules.
 --  Modify this table to change the defaults.
 --
-if not couth.CONFIG then 
-  couth.CONFIG = {
+couth.config:set_defaults({
+  -- The number of '|' characters that will be used to represent the volume
+  -- indicator bar
+  indicator_max_bars = 20,
 
-		-- The width of your volume indicators (the max number of | characters to
-		-- display)
-    INDICATOR_MAX_BARS = 20,
+  -- these are the alsa controls that can be controlled or displayed
+  -- by couth. To get a list of possible values, execute this in a shell:
+  --
+  --    amixer -c0 scontrols |sed -e "s/.* '//" -e "s/'.*//"
+  --
+  -- (use -c1 if your mixer controls are associated with card1 not card0)
+  alsa_controls = {
+    'Master',
+    'Speaker',
+    'Headphone',
+  },
 
-    -- these are the alsa controls that can be controlled or displayed
-    -- by couth. To get a list of possible values, execute this in a shell:
-    --
-    --    amixer scontrols |sed -e "s/.* '//" -e "s/'.*//"
-    --
-    ALSA_CONTROLS = {
-      'Master',
-      'PCM',
-      'Speaker',
-      'Headphone',
-    },
+  -- Initialize to nil here. If the value is nil then the couth sound library will
+  -- try to auto-detect the card number
+  alsa_card_number = nil,
 
-		-- The font to use for notifications. You should use a mono-space font so
-		-- the columns are evenly aligned.
-    NOTIFIER_FONT = 'mono 22',
-    NOTIFIER_POSITION = 'top_right',
-    NOTIFIER_TIMEOUT = 5,
+  -- Set use_pulse_audio to true or false to tell couth whether to use pulse
+  -- audio controls for toggling audio output mute state. If this configuration
+  -- setting is nil (unset) then couth will attempt to autodetect whether or not
+  -- pulse audio is being used.
+  use_pulse_audio = nil,
 
-  } 
-end
+  -- The font to use for notifications. You should use a mono-space font so
+  -- the columns are evenly aligned.
+  notifier_font = 'mono 22',
+  notifier_position = 'top_right',
+  notifier_timeout = 5,
+})
 
---
---  general functions
---
-function couth.count_keys(t)
-  local n=0
-  for _,_ in pairs(t) do n=n+1 end
-  return n
-end
-
-
---
---  file path functions (like python os.path)
---
-if not couth['path'] then couth.path = {} end
-function couth.path.file_exists(fileName)
-  doesExist = false
-  f = io.open(fileName, 'r')
-  if f then
-    doesExist = true
-    f:close()
-  end
-  return doesExist
-end
-
---
---  string functions
---
-if not couth['string'] then couth.string = {} end
-function couth.string.maxLen(t)
-  local ret=0, l
-  for _,v in pairs(t) do
-    if v and type(v)=='string' then
-      l = v:len()
-      if l>ret then ret=l end
-    end
-  end
-  return ret
-end
-
-function couth.string.rpad(str, width)
-  return str .. string.rep(' ', width - str:len())
-end
-
+-- require("gears.debug").dump(couth.config)
 --
 --  indicator functions
 --
-if not couth['indicator'] then couth.indicator = {} end
-function couth.indicator.barIndicator(prct)
-  local maxBars = couth.CONFIG.INDICATOR_MAX_BARS
-  local num_bars = math.floor(maxBars * (prct / 100.0))
-  return '[' .. couth.string.rpad(string.rep('|', num_bars), maxBars) .. ']'
+couth.indicator = {}
+function couth.indicator.bar_indicator(prct)
+  local max_bars = couth.config.indicator_max_bars
+  local num_bars = math.floor(max_bars * (prct / 100.0))
+  return '[' .. couth.string.rpad(string.rep('|', num_bars), max_bars) .. ']'
 end
 
 --
@@ -106,10 +88,11 @@ if not couth['notifier'] then couth.notifier = {id=nil} end
 function couth.notifier:notify(msg)
   self.id = naughty.notify({
     text = msg,
-    font = couth.CONFIG.NOTIFIER_FONT,
-    position = couth.CONFIG.NOTIFIER_POSITION,
-    timeout = couth.CONFIG.NOTIFIER_TIMEOUT,
+    font = couth.config.notifier_font,
+    position = couth.config.notifier_position,
+    timeout = couth.config.notifier_timeout,
     replaces_id = self.id
   }).id
 end
 
+return couth
