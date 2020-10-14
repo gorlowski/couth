@@ -3,11 +3,16 @@
 --    couth.lua   -- core library for the couth awesome wm project
 --
 --    @author Greg Orlowski
+--    @contributor ▟ ▖▟ ▖
+--
 --    @copyright 2020 Greg Orlowski
 --
 ---------------------------------------------------------------------------
 
-require 'io'
+couth = { path = {}, string = {}, indicator = {}, notifier = {id=nil} }
+
+local io = require 'io'
+local naughty = naughty or  require 'naughty'
 
 local naughty = require("naughty")
 local couth_lib = require("couth.lib")
@@ -53,6 +58,14 @@ couth.config:set_defaults({
     'Headphone',
   },
 
+  -- Characters to draw the actual bar with
+  -- more complex example: {'','▏','▎','▍','▌','▋','▊','▉','█'}
+  -- indicator_bars = {'|'},
+  indicator_bars = {'▏','▎','▍','▌','▋','▊','▉','█'},
+
+  -- outer left and outer right character of the bar
+  indicator_borders = {'[',']'},
+
   -- Initialize to nil here. If the value is nil then the couth sound library will
   -- try to auto-detect the card number
   alsa_card_number = nil,
@@ -70,21 +83,43 @@ couth.config:set_defaults({
   notifier_timeout = 5,
 })
 
--- require("gears.debug").dump(couth.config)
+-- Return 
+
+local __full_indicator_bar_char_table = nil
+local full_indicator_bar_char_table = function()
+  if __full_indicator_bar_char_table == nil then
+    local bar_chars = couth.config.indicator_bars
+    local i
+    __full_indicator_bar_char_table = {}
+    for i=1,couth.config.indicator_max_bars do 
+      table.insert(__full_indicator_bar_char_table, bar_chars[math.ceil((#bar_chars/couth.config.indicator_max_bars)*i)])
+    end
+  end
+  return __full_indicator_bar_char_table
+end
+
 --
 --  indicator functions
 --
 couth.indicator = {}
 function couth.indicator.bar_indicator(prct)
+  local bar_chars = couth.config.indicator_bars
+  local border_chars = couth.config.indicator_borders
   local max_bars = couth.config.indicator_max_bars
   local num_bars = math.floor(max_bars * (prct / 100.0))
-  return '[' .. couth.string.rpad(string.rep('|', num_bars), max_bars) .. ']'
+  local display_bar
+
+  if #bar_chars == 1 then -- shortcut
+    display_bar = string.rep(bar_chars[1], num_bars)
+  else
+    display_bar = table.concat({table.unpack(full_indicator_bar_char_table(), 1, num_bars)})
+  end
+  return border_chars[1] .. couth.string.rpad(display_bar, max_bars) .. border_chars[2]
 end
 
 --
 --  notifier
 --
-if not couth['notifier'] then couth.notifier = {id=nil} end
 function couth.notifier:notify(msg)
   self.id = naughty.notify({
     text = msg,

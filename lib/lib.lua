@@ -1,3 +1,5 @@
+local utf8 = require('utf8')
+
 --
 --  General purpose library helper functions
 --
@@ -56,8 +58,12 @@ function M.string.max_len(t)
   return ret
 end
 
+-- str:len() returns byte count not character
+-- length. Assume that we're using utf8 and use
+-- utf8.len(str) to get the character count
 function M.string.rpad(str, width)
-  return str .. string.rep(' ', width - str:len())
+  -- return str .. string.rep(' ', width - str:len())
+  return str .. string.rep(' ', width - utf8.len(str))
 end
 
 return M
