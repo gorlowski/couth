@@ -23,6 +23,12 @@ couth.sound:
         PCM      :     [||||||||||||||||||||]
         Front    : [ ] [|||||||||||||||||   ]
 
+    They can also be configured to look like this (contributed by user dodo)::
+
+        Master   : [ ] [▏▏▎▎▎▍▍▌▌▌▋▋▊▊▊▉▉███]
+        Speaker  : [ ] [▏▏▎▎▎▍▍▌▌▌▋▋▊▊▊▉▉███]
+        Headphone:     [                    ]
+
     For usage and configuration, look at `lib/sound.lua <lib/sound.lua>`_.
 
 couth.screen:

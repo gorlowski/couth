@@ -58,9 +58,11 @@ couth.config:set_defaults({
     'Headphone',
   },
 
-  -- Characters to draw the actual bar with
-  -- more complex example: {'','▏','▎','▍','▌','▋','▊','▉','█'}
+  -- If we want uniform bar indicators with a single char, use:
   -- indicator_bars = {'|'},
+
+  -- We can also configure our indicator bar to use a series of
+  -- characters like this:
   indicator_bars = {'▏','▎','▍','▌','▋','▊','▉','█'},
 
   -- outer left and outer right character of the bar
