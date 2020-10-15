@@ -212,7 +212,7 @@ function M.display_volume_state(opts)
         .. couth.indicator.bar_indicator(volumes[ctrl]['vol']) .. suffix)
     end
   end
-  _write_output_to_file("/tmp/couth_volume_display.out", table.concat(ret,"\n"))
+  -- _write_output_to_file("/tmp/couth_volume_display.out", table.concat(ret,"\n"))
   return table.concat(ret,"\n")
 end
 
