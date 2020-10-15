@@ -9,7 +9,7 @@
 --
 ---------------------------------------------------------------------------
 
-couth = { path = {}, string = {}, indicator = {}, notifier = {id=nil} }
+local couth = { path = {}, config= {}, string = {}, indicator = {}, notifier = {id=nil} }
 
 local io = require 'io'
 local naughty = naughty or  require 'naughty'
@@ -17,23 +17,20 @@ local naughty = naughty or  require 'naughty'
 local naughty = require("naughty")
 local couth_lib = require("couth.lib")
 
--- Initialize couth.config only if it is non-nil. This allows the user to
--- optionally initialize couth.config before this module is loaded
-local couth = couth or {}
-if not couth.config then couth.config = {} end
-
 -- Add couth_lib to the couth namespace
 for k,v in pairs(couth_lib) do couth[k]=v end
 
-function couth.config:set_default(k,v)
-  if self[k] == nil and v ~= nil then
-    self[k] = v
-  end
-end
-
-function couth.config:set_defaults(t)
-  for k,v in pairs(t) do
-    self:set_default(k, v)
+-- You can call update with either a key/value pair OR with a
+-- table that contains key/value pairs
+function couth.config:update(key_or_table, val)
+  if type(key_or_table) == 'table' then
+    for k,v in pairs(key_or_table) do
+      self:update(k, v)
+    end
+  else
+    if self[key_or_table] == nil and val ~= nil then
+      self[key_or_table] = val
+    end
   end
 end
 
@@ -41,7 +38,7 @@ end
 --  This is the default configuration for couth modules.
 --  Modify this table to change the defaults.
 --
-couth.config:set_defaults({
+couth.config:update({
   -- The number of '|' characters that will be used to represent the volume
   -- indicator bar
   indicator_max_bars = 20,

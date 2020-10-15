@@ -43,18 +43,20 @@ couth.screen:
     turn off the display. This only works if your user can write to the
     "brightness" file in /sys that corresponds to your video driver.
 
-    I added the following udev rules in ``/etc/udev/rules.d/backlight.rules``
-    to ensure that members of the video group (including my user) have access
-    to write to the display brightness control file::
+    On my system, I added the following udev rules in
+    ``/etc/udev/rules.d/backlight.rules`` to ensure that members of the video
+    group (including my user) have access to write to the display brightness
+    control file::
 	
         # See: https://wiki.archlinux.org/index.php/backlight
   			#
         # On my system with intel video, backlight controls are in
-        # /sys/class/backlight/intel_backlight By default, the brightness file in
-        # this directory can only be written by root. These rules change the
-        # group ownership of the brightness file to video and make the file
-        # group-writable. This allows personal users in the video group to set
-        # the backlight brightness by writing to the file.
+        # /sys/class/backlight/intel_backlight. By default, the brightness file
+        # in this directory can only be written by root. You can add udev rules
+        # to change the group ownership of the brightness file to the video
+        # group and make the file group-writable. This allows personal users in
+        # the video group to set the backlight brightness by writing to the
+        # file.
   		  ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness"
   		  ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
 		
@@ -92,8 +94,15 @@ Installation
     couth.screen = require('couth.screen')
 
 
-- Update your ``rc.lua`` to add a couth.CONFIG section to customize couth, and
-  then add key bindings to couth functions.
+- To customize your couth configuration, you can call the following in your
+  ``rc.lua``::
+
+  couth.config:update({
+    alsa_card_number = 0,     -- OPTIONAL. This is auto-discovered if unspecified.
+    indicator_bars = {'▁','▂','▃','▄','▅','▆','▇','█'},   -- alternative bar style
+  })
+
+- Then add key bindings to couth functions.
 
 ----------------------
 rc.lua configuration
@@ -105,7 +114,7 @@ pulse audio and the location of your video device backlight controls. You can
 override this auto discovery and also change some configuration settings by
 calling::
 
-couth.config:set_defaults({
+couth.config:update({
 
   -- explicitly use pulse audio controls for toggling mute state. You probably
   -- should only set this if you are trying to work around a glitch
@@ -130,7 +139,7 @@ couth.config:set_defaults({
 
 })
 
-Search for ``couth.config:set_defaults`` in ``lib/couth.lua`` to see all the
+Search for ``couth.config:update`` in ``lib/couth.lua`` to see all the
 available configuration options.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

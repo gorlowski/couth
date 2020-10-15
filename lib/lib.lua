@@ -51,7 +51,7 @@ function M.string.max_len(t)
   local ret=0, l
   for _,v in pairs(t) do
     if v and type(v)=='string' then
-      l = v:len()
+      l = utf8.len(v)
       if l>ret then ret=l end
     end
   end
