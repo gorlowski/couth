@@ -121,15 +121,15 @@ calling::
 
     -- explicitly use pulse audio controls for toggling mute state. You probably
     -- should only set this if you are trying to work around a glitch
-    use_pulse_audio = true,       
-    
+    use_pulse_audio = true,
+
     -- explicitly use the audio controls for card1 rather than the first audio
     -- card that is auto-discovered.  Other devices may use card0 or possibly a
     -- different card (card2). You should probably not set this explicitly unless
     -- your system has multiple audio cards. This number should be the same value
-    -- that you would pass to the card parameter of amixer or alsamixer (e.g., 
+    -- that you would pass to the card parameter of amixer or alsamixer (e.g.,
     -- alsamixer -c1)
-    alsa_card_number = 1,         
+    alsa_card_number = 1,
 
     -- Set the audio volume controls that you would like to see when you view or change
     -- a volume setting. If you are only interested in the Master volume, you may
@@ -153,22 +153,34 @@ Here is an example of using your keyboard volume +/- buttons to
 increase/decrease your Master alsa volume. This also binds the mute key on your
 keyboard to toggle the mute/unmute status of your Master volume.::
 
-    awful.key({ }, "XF86AudioLowerVolume",   function () couth.notifier:notify( couth.sound.set_volume('Master','3dB-')) end,
-    awful.key({ }, "XF86AudioRaiseVolume",   function () couth.notifier:notify( couth.sound.set_volume('Master','3dB+')) end,
+    awful.key({ }, "XF86AudioLowerVolume",
+      function () couth.notifier:notify( couth.sound.set_volume('Master','3dB-')) end,
+      {description = "lower the Master volume by 3dB", group = "awesome"}),
+
+    awful.key({ }, "XF86AudioRaiseVolume",
+      function () couth.notifier:notify( couth.sound.set_volume('Master','3dB+')) end,
+      {description = "raise the Master volume by 3dB", group = "awesome"}),
 
 If you want to explicitly adjust the Headphone control rather than the Master control, you can do something like::
 
-    awful.key({ "Control" }, "XF86AudioLowerVolume",    function () couth.notifier:notify( couth.sound.set_volume('Headphone','3dB-')) end,
-    awful.key({ "Control" }, "XF86AudioRaiseVolume",    function () couth.notifier:notify( couth.sound.set_volume('Headphone','3dB+')) end,
+    awful.key({ "Control" }, "XF86AudioLowerVolume",
+      function () couth.notifier:notify( couth.sound.set_volume('Headphone','3dB-')) end,
+      {description = "lower the Headphone volume by 3dB", group = "awesome"}),
+
+    awful.key({ "Control" }, "XF86AudioRaiseVolume",
+      function () couth.notifier:notify( couth.sound.set_volume('Headphone','3dB+')) end,
+      {description = "raise the Headphone volume by 3dB", group = "awesome"}),
 
 To toggle the mute state of your audio outputs::
 
     awful.key({}, "XF86AudioMute", function () couth.notifier:notify( couth.sound.toggle_mute()) end,
               {description = "toggle mute for audio outputs", group = "awesome"}),
 
-See current volume levels (but do not change any of them)::
+Display the current volume levels (but do not change any of them)::
 
-    awful.key({ modkey }, "v", function () couth.notifier:notify( couth.sound.display_volume_state() ) end,
+    awful.key({ modkey }, "v",
+      function () couth.notifier:notify( couth.sound.display_volume_state() ) end,
+      {description = "Display all volume levels", group = "awesome"}),
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 couth.screen key binding examples
