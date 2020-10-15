@@ -154,22 +154,22 @@ increase/decrease your Master alsa volume. This also binds the mute key on your
 keyboard to toggle the mute/unmute status of your Master volume.::
 
     awful.key({ }, "XF86AudioLowerVolume",
-      function () couth.notifier:notify( couth.sound.set_volume('Master','3dB-')) end,
-      {description = "lower the Master volume by 3dB", group = "awesome"}),
+              function () couth.notifier:notify( couth.sound.set_volume('Master','3dB-')) end,
+              {description = "lower the Master volume by 3dB", group = "awesome"}),
 
     awful.key({ }, "XF86AudioRaiseVolume",
-      function () couth.notifier:notify( couth.sound.set_volume('Master','3dB+')) end,
-      {description = "raise the Master volume by 3dB", group = "awesome"}),
+              function () couth.notifier:notify( couth.sound.set_volume('Master','3dB+')) end,
+              {description = "raise the Master volume by 3dB", group = "awesome"}),
 
 If you want to explicitly adjust the Headphone control rather than the Master control, you can do something like::
 
     awful.key({ "Control" }, "XF86AudioLowerVolume",
-      function () couth.notifier:notify( couth.sound.set_volume('Headphone','3dB-')) end,
-      {description = "lower the Headphone volume by 3dB", group = "awesome"}),
+              function () couth.notifier:notify( couth.sound.set_volume('Headphone','3dB-')) end,
+              {description = "lower the Headphone volume by 3dB", group = "awesome"}),
 
     awful.key({ "Control" }, "XF86AudioRaiseVolume",
-      function () couth.notifier:notify( couth.sound.set_volume('Headphone','3dB+')) end,
-      {description = "raise the Headphone volume by 3dB", group = "awesome"}),
+              function () couth.notifier:notify( couth.sound.set_volume('Headphone','3dB+')) end,
+              {description = "raise the Headphone volume by 3dB", group = "awesome"}),
 
 To toggle the mute state of your audio outputs::
 
@@ -179,8 +179,8 @@ To toggle the mute state of your audio outputs::
 Display the current volume levels (but do not change any of them)::
 
     awful.key({ modkey }, "v",
-      function () couth.notifier:notify( couth.sound.display_volume_state() ) end,
-      {description = "Display all volume levels", group = "awesome"}),
+              function () couth.notifier:notify( couth.sound.display_volume_state() ) end,
+              {description = "Display all volume levels", group = "awesome"}),
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 couth.screen key binding examples
