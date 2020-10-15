@@ -98,8 +98,11 @@ Installation
   ``rc.lua``::
 
   couth.config:update({
+
     alsa_card_number = 0,     -- OPTIONAL. This is auto-discovered if unspecified.
+
     indicator_bars = {'▁','▂','▃','▄','▅','▆','▇','█'},   -- alternative bar style
+
   })
 
 - Then add key bindings to couth functions.
