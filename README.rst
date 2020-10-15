@@ -29,6 +29,12 @@ couth.sound:
         Speaker  : [ ] [▏▏▎▎▎▍▍▌▌▌▋▋▊▊▊▉▉███]
         Headphone:     [                    ]
 
+    Or you might prefer this look::
+
+        Master   : [ ] [▁▁▂▂▂▃▃▄▄▄▅▅▆▆▆▇    ]
+        Speaker  : [ ] [▁▁▂▂▂▃▃▄▄▄▅▅▆▆▆▇▇███]
+        Headphone:     [                    ]
+
     For usage and configuration, look at `lib/sound.lua <lib/sound.lua>`_.
 
 couth.screen:

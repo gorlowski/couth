@@ -58,12 +58,17 @@ couth.config:set_defaults({
     'Headphone',
   },
 
-  -- If we want uniform bar indicators with a single char, use:
+  -- If you want uniform bar indicators that use the same character for each
+  -- bar, use (you may prefer a different bar character, such as one of the
+  -- thicker bar characters below):
   -- indicator_bars = {'|'},
 
-  -- We can also configure our indicator bar to use a series of
-  -- characters like this:
+  -- You can also configure your indicator bar to use a series of
+  -- increasingly-thicker characters like this:
   indicator_bars = {'▏','▎','▍','▌','▋','▊','▉','█'},
+
+  -- Or increasingly-taller characters like this:
+  -- indicator_bars = {'▁','▂','▃','▄','▅','▆','▇','█'},
 
   -- outer left and outer right character of the bar
   indicator_borders = {'[',']'},
@@ -85,7 +90,7 @@ couth.config:set_defaults({
   notifier_timeout = 5,
 })
 
--- Return 
+-- Return
 
 local __full_indicator_bar_char_table = nil
 local full_indicator_bar_char_table = function()
@@ -93,7 +98,7 @@ local full_indicator_bar_char_table = function()
     local bar_chars = couth.config.indicator_bars
     local i
     __full_indicator_bar_char_table = {}
-    for i=1,couth.config.indicator_max_bars do 
+    for i=1,couth.config.indicator_max_bars do
       table.insert(__full_indicator_bar_char_table, bar_chars[math.ceil((#bar_chars/couth.config.indicator_max_bars)*i)])
     end
   end

@@ -170,6 +170,15 @@ local function _mute_indicator(on_or_off)
   return '[M]'
 end
 
+-- I have this here so I can write display output
+-- to a temp file to compare the visual appearance
+-- of different display styles
+local function _write_output_to_file(file,str)
+  fd = io.open(file,'w')
+  fd:write(str)
+  fd:close()
+end
+
 --
 --  valid keys for opts:
 --
@@ -203,6 +212,7 @@ function M.display_volume_state(opts)
         .. couth.indicator.bar_indicator(volumes[ctrl]['vol']) .. suffix)
     end
   end
+  _write_output_to_file("/tmp/couth_volume_display.out", table.concat(ret,"\n"))
   return table.concat(ret,"\n")
 end
 
