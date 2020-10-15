@@ -117,30 +117,30 @@ pulse audio and the location of your video device backlight controls. You can
 override this auto discovery and also change some configuration settings by
 calling::
 
-couth.config:update({
+  couth.config:update({
 
-  -- explicitly use pulse audio controls for toggling mute state. You probably
-  -- should only set this if you are trying to work around a glitch
-  use_pulse_audio = true,       
-  
-  -- explicitly use the audio controls for card1 rather than the first audio
-  -- card that is auto-discovered.  Other devices may use card0 or possibly a
-  -- different card (card2). You should probably not set this explicitly unless
-  -- your system has multiple audio cards. This number should be the same value
-  -- that you would pass to the card parameter of amixer or alsamixer (e.g., 
-  -- alsamixer -c1)
-  alsa_card_number = 1,         
+    -- explicitly use pulse audio controls for toggling mute state. You probably
+    -- should only set this if you are trying to work around a glitch
+    use_pulse_audio = true,       
+    
+    -- explicitly use the audio controls for card1 rather than the first audio
+    -- card that is auto-discovered.  Other devices may use card0 or possibly a
+    -- different card (card2). You should probably not set this explicitly unless
+    -- your system has multiple audio cards. This number should be the same value
+    -- that you would pass to the card parameter of amixer or alsamixer (e.g., 
+    -- alsamixer -c1)
+    alsa_card_number = 1,         
 
-  -- Set the audio volume controls that you would like to see when you view or change
-  -- a volume setting. If you are only interested in the Master volume, you may
-  -- set this to just: alsa_controls = {'Master'}
-  alsa_controls = {
-      'Master',
-      'Speaker',
-      'Headphone',
-  },
+    -- Set the audio volume controls that you would like to see when you view or change
+    -- a volume setting. If you are only interested in the Master volume, you may
+    -- set this to just: alsa_controls = {'Master'}
+    alsa_controls = {
+        'Master',
+        'Speaker',
+        'Headphone',
+    },
 
-})
+  })
 
 Search for ``couth.config:update`` in ``lib/couth.lua`` to see all the
 available configuration options.
