@@ -170,6 +170,10 @@ See current volume levels (but do not change any of them)::
 
     awful.key({ modkey }, "v", function () couth.notifier:notify( couth.sound.display_volume_state() ) end,
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+couth.screen key binding examples
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Bind keys to increase or decrease the screen display backlight in 10% increments::
 
     awful.key({}, "XF86MonBrightnessDown",   function () couth.screen.set_brightness(-0.1) end,
